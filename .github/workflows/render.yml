@@ -1,0 +1,33 @@
+name: render-kindle-panel
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # 每小时整点运行
+  workflow_dispatch:      # 手动触发
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Render panel
+        run: python render_panel.py
+
+      - name: Commit panel.png
+        run: |
+          git config user.name "kindle-panel-bot"
+          git config user.email "kindle-panel-bot@users.noreply.github.com"
+          git add panel.png
+          git commit -m "update panel $(date -u +%Y%m%d%H%M)" || echo "no changes"
+          git push
