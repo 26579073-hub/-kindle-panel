@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kindle 7 信息屏渲染端 v2
+Kindle 7 信息屏渲染端 v3
 每小时运行一次：抓取天气/紫外线/空气质量/金句/上证指数 → 渲染 600x800 灰度 PNG
 输出: panel.png（Kindle 端直接拉取这张图）
 数据源:
