@@ -2,7 +2,7 @@ name: render-kindle-panel
 
 on:
   schedule:
-    - cron: "0 * * * *"   # 每小时整点运行
+    - cron: "*/15 * * * *"   # 每 15 分钟运行
   workflow_dispatch:      # 手动触发
 
 jobs:
@@ -31,3 +31,7 @@ jobs:
           git add panel.png
           git commit -m "update panel $(date -u +%Y%m%d%H%M)" || echo "no changes"
           git push
+
+      - name: Purge CDN cache
+        run: |
+          curl -s -X POST "https://purge.jsdelivr.net/gh/26579073-hub/-kindle-panel@main/panel.png" || true
