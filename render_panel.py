@@ -146,10 +146,11 @@ def get_stock():
 
 
 def get_quote():
-    """quotes.txt 按天轮换（每天同一句，稳定不刷屏）"""
+    """quotes.txt 每次渲染轮换（每15分钟换一句，可自行编辑）"""
     quotes = load_quotes()
-    day_of_year = datetime.now(CST).timetuple().tm_yday
-    return quotes[day_of_year % len(quotes)]
+    now = datetime.now(CST)
+    slot = (now.hour * 3600 + now.minute * 60 + now.second) // 900  # 每15分钟一个槽位
+    return quotes[slot % len(quotes)]
 
 
 def aqi_level(aqi):
